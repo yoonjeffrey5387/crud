@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.agenda.MainController">
+
+    <top>
+<HBox spacing="8">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>            <Label text="Buscar:"/>
+            <TextField fx:id="searchField" promptText="Nombre contiene..." onKeyReleased="#onSearch"/>
+            <Button text="Nuevo" onAction="#onNew"/>
+            <Button text="Guardar" onAction="#onSave"/>
+            <Button text="Eliminar" onAction="#onDelete"/>
+            <Button text="Refrescar" onAction="#onRefresh"/>
+            <Pane HBox.hgrow="ALWAYS"/>
+        </HBox>
+    </top>
+
+    <center>
+        <SplitPane dividerPositions="0.5">
+            <items>
+                <VBox spacing="8">
+                    <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                    </padding>
+                    <Label text="Personas"/>
+                    <TableView fx:id="personTable" prefHeight="400.0">
+                        <columns>
+                            <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+                            <TableColumn fx:id="colNombre" text="Nombre" prefWidth="180"/>
+                            <TableColumn fx:id="colDireccion" text="Dirección" prefWidth="220"/>
+                            <TableColumn fx:id="colTelefonos" text="# Teléfonos" prefWidth="100"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+
+                <VBox spacing="8">
+                    <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                    </padding>
+                    <Label text="Detalle / Edición"/>
+                    <GridPane hgap="8" vgap="8">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="25"/>
+                            <ColumnConstraints percentWidth="75"/>
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints/>
+                            <RowConstraints/>
+                            <RowConstraints/>
+                        </rowConstraints>
+                        <children>
+                            <Label text="ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                            <Label fx:id="lblId" text="-" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                            <Label text="Nombre:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                            <TextField fx:id="nombreField" promptText="Nombre" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                            <Label text="Dirección:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                            <TextField fx:id="direccionField" promptText="Dirección" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                        </children>
+                    </GridPane>
+
+                    <HBox spacing="8">
+                        <TextField fx:id="telefonoField" promptText="Agregar teléfono"/>
+                        <Button text="Añadir" onAction="#onAddPhone"/>
+                        <Button text="Quitar seleccionado" onAction="#onRemoveSelectedPhone"/>
+                    </HBox>
+                    <ListView fx:id="telefonosList" prefHeight="200.0"/>
+
+                </VBox>
+            </items>
+        </SplitPane>
+    </center>
+
+    <bottom>
+        <Label text="Agenda CRUD • JavaFX + MariaDB">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+        </Label>
+    </bottom>
+</BorderPane>
