@@ -10,7 +10,7 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader fxml = new FXMLLoader(App.class.getResource("main-view.fxml"));
         Scene scene = new Scene(fxml.load(), 900, 600);
-        stage.setTitle("Agenda CRUD • Personas + Teléfonos");
+        stage.setTitle("Agenda CRUD");
         stage.setScene(scene);
         stage.show();
     }

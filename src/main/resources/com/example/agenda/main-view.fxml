@@ -8,82 +8,192 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.agenda.MainController">
 
+    <!-- Header -->
     <top>
-<HBox spacing="8">
-    <padding>
-        <Insets top="10" right="10" bottom="10" left="10"/>
-    </padding>            <Label text="Buscar:"/>
-            <TextField fx:id="searchField" promptText="Nombre contiene..." onKeyReleased="#onSearch"/>
-            <Button text="Nuevo" onAction="#onNew"/>
-            <Button text="Guardar" onAction="#onSave"/>
-            <Button text="Eliminar" onAction="#onDelete"/>
-            <Button text="Refrescar" onAction="#onRefresh"/>
-            <Pane HBox.hgrow="ALWAYS"/>
-        </HBox>
+        <VBox spacing="10" style="-fx-background-color: #2c3e50; -fx-padding: 15;">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Agenda de Contactos" 
+                       style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
+                <TextField fx:id="searchField" 
+                          promptText="Buscar por nombre..." 
+                          style="-fx-background-radius: 5; -fx-padding: 8;"
+                          onKeyReleased="#onSearch"/>
+            </HBox>
+            
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Button text="Nuevo" onAction="#onNew"
+                       style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;"/>
+                <Button text="Guardar" onAction="#onSave"
+                       style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;"/>
+                <Button text="Eliminar" onAction="#onDelete"
+                       style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;"/>
+                <Button text="Refrescar" onAction="#onRefresh"
+                       style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;"/>
+            </HBox>
+        </VBox>
     </top>
 
+    <!-- Contenido principal -->
     <center>
-        <SplitPane dividerPositions="0.5">
+        <SplitPane dividerPositions="0.45" style="-fx-background-color: white;">
             <items>
-                <VBox spacing="8">
-                    <padding>
-                        <Insets top="10" right="10" bottom="10" left="10"/>
-                    </padding>
-                    <Label text="Personas"/>
-                    <TableView fx:id="personTable" prefHeight="400.0">
+                <!-- Panel izquierdo: Lista de personas -->
+                <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 15;">
+                    <Label text="Lista de Personas" 
+                           style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                    
+                    <TableView fx:id="personTable" 
+                              prefHeight="500.0"
+                              style="-fx-background-color: white; -fx-border-color: #bdc3c7; -fx-border-radius: 5;">
                         <columns>
-                            <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
-                            <TableColumn fx:id="colNombre" text="Nombre" prefWidth="180"/>
-                            <TableColumn fx:id="colDireccion" text="Dirección" prefWidth="220"/>
-                            <TableColumn fx:id="colTelefonos" text="# Teléfonos" prefWidth="100"/>
+                            <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+                            <TableColumn fx:id="colNombre" text="Nombre" prefWidth="150"/>
+                            <TableColumn fx:id="colEmail" text="Email" prefWidth="200"/>
+                            <TableColumn fx:id="colTelefonos" text="Teléfonos" prefWidth="80"/>
+                            <TableColumn fx:id="colDirecciones" text="Direcciones" prefWidth="90"/>
                         </columns>
                     </TableView>
                 </VBox>
 
-                <VBox spacing="8">
-                    <padding>
-                        <Insets top="10" right="10" bottom="10" left="10"/>
-                    </padding>
-                    <Label text="Detalle / Edición"/>
-                    <GridPane hgap="8" vgap="8">
-                        <columnConstraints>
-                            <ColumnConstraints percentWidth="25"/>
-                            <ColumnConstraints percentWidth="75"/>
-                        </columnConstraints>
-                        <rowConstraints>
-                            <RowConstraints/>
-                            <RowConstraints/>
-                            <RowConstraints/>
-                        </rowConstraints>
-                        <children>
-                            <Label text="ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                            <Label fx:id="lblId" text="-" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <!-- Panel derecho: Edición -->
+                <ScrollPane style="-fx-background-color: white;">
+                    <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 15;">
+                        
+                        <!-- Información básica -->
+                        <VBox spacing="10" style="-fx-background-color: #ecf0f1; -fx-padding: 15; -fx-background-radius: 8;">
+                            <Label text="Información Personal" 
+                                   style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                            
+                            <GridPane hgap="10" vgap="8">
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="25"/>
+                                    <ColumnConstraints percentWidth="75"/>
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                </rowConstraints>
+                                <children>
+                                    <Label text="ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"
+                                           style="-fx-font-weight: bold;"/>
+                                    <Label fx:id="lblId" text="-" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-                            <Label text="Nombre:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                            <TextField fx:id="nombreField" promptText="Nombre" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                                    <Label text="Nombre:" GridPane.rowIndex="1" GridPane.columnIndex="0"
+                                           style="-fx-font-weight: bold;"/>
+                                    <TextField fx:id="nombreField" 
+                                              promptText="Nombre completo" 
+                                              GridPane.rowIndex="1" GridPane.columnIndex="1"
+                                              style="-fx-background-radius: 5; -fx-padding: 8;"/>
 
-                            <Label text="Dirección:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                            <TextField fx:id="direccionField" promptText="Dirección" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-                        </children>
-                    </GridPane>
+                                    <Label text="Email:" GridPane.rowIndex="2" GridPane.columnIndex="0"
+                                           style="-fx-font-weight: bold;"/>
+                                    <TextField fx:id="emailField" 
+                                              promptText="correo@ejemplo.com" 
+                                              GridPane.rowIndex="2" GridPane.columnIndex="1"
+                                              style="-fx-background-radius: 5; -fx-padding: 8;"/>
+                                </children>
+                            </GridPane>
+                        </VBox>
 
-                    <HBox spacing="8">
-                        <TextField fx:id="telefonoField" promptText="Agregar teléfono"/>
-                        <Button text="Añadir" onAction="#onAddPhone"/>
-                        <Button text="Quitar seleccionado" onAction="#onRemoveSelectedPhone"/>
-                    </HBox>
-                    <ListView fx:id="telefonosList" prefHeight="200.0"/>
+                        <!-- Gestión de teléfonos -->
+                        <VBox spacing="10" style="-fx-background-color: #e8f5e8; -fx-padding: 15; -fx-background-radius: 8;">
+                            <Label text="Teléfonos" 
+                                   style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #27ae60;"/>
+                            
+                            <HBox spacing="10">
+                                <TextField fx:id="telefonoField" 
+                                          promptText="Número de teléfono" 
+                                          style="-fx-background-radius: 5; -fx-padding: 8;"/>
+                                <Button text="Agregar" onAction="#onAddPhone"
+                                       style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;"/>
+                                <Button text="Quitar" onAction="#onRemovePhone"
+                                       style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;"/>
+                            </HBox>
+                            
+                            <ListView fx:id="telefonosList" 
+                                     prefHeight="100.0"
+                                     style="-fx-background-color: white; -fx-border-color: #27ae60; -fx-border-radius: 5;"/>
+                        </VBox>
 
-                </VBox>
+                        <!-- Gestión de direcciones -->
+                        <VBox spacing="10" style="-fx-background-color: #fff3e0; -fx-padding: 15; -fx-background-radius: 8;">
+                            <Label text="Direcciones" 
+                                   style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #f39c12;"/>
+                            
+                            <!-- Campos para nueva dirección -->
+                            <GridPane hgap="10" vgap="8">
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="25"/>
+                                    <ColumnConstraints percentWidth="75"/>
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                </rowConstraints>
+                                <children>
+                                    <Label text="Calle:" GridPane.rowIndex="0" GridPane.columnIndex="0"
+                                           style="-fx-font-weight: bold;"/>
+                                    <TextField fx:id="calleField" 
+                                              promptText="Calle y número" 
+                                              GridPane.rowIndex="0" GridPane.columnIndex="1"
+                                              style="-fx-background-radius: 5; -fx-padding: 8;"/>
+
+                                    <Label text="Ciudad:" GridPane.rowIndex="1" GridPane.columnIndex="0"
+                                           style="-fx-font-weight: bold;"/>
+                                    <TextField fx:id="ciudadField" 
+                                              promptText="Ciudad" 
+                                              GridPane.rowIndex="1" GridPane.columnIndex="1"
+                                              style="-fx-background-radius: 5; -fx-padding: 8;"/>
+
+                                    <Label text="Estado:" GridPane.rowIndex="2" GridPane.columnIndex="0"
+                                           style="-fx-font-weight: bold;"/>
+                                    <TextField fx:id="estadoField" 
+                                              promptText="Estado" 
+                                              GridPane.rowIndex="2" GridPane.columnIndex="1"
+                                              style="-fx-background-radius: 5; -fx-padding: 8;"/>
+
+                                    <Label text="C.P.:" GridPane.rowIndex="3" GridPane.columnIndex="0"
+                                           style="-fx-font-weight: bold;"/>
+                                    <TextField fx:id="codigoPostalField" 
+                                              promptText="Código Postal" 
+                                              GridPane.rowIndex="3" GridPane.columnIndex="1"
+                                              style="-fx-background-radius: 5; -fx-padding: 8;"/>
+
+                                    <Label text="País:" GridPane.rowIndex="4" GridPane.columnIndex="0"
+                                           style="-fx-font-weight: bold;"/>
+                                    <TextField fx:id="paisField" 
+                                              promptText="País" 
+                                              GridPane.rowIndex="4" GridPane.columnIndex="1"
+                                              style="-fx-background-radius: 5; -fx-padding: 8;"/>
+                                </children>
+                            </GridPane>
+                            
+                            <HBox spacing="10">
+                                <Button text="Agregar Dirección" onAction="#onAddAddress"
+                                       style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;"/>
+                                <Button text="Quitar Dirección" onAction="#onRemoveAddress"
+                                       style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;"/>
+                            </HBox>
+                            
+                            <ListView fx:id="direccionesList" 
+                                     prefHeight="120.0"
+                                     style="-fx-background-color: white; -fx-border-color: #f39c12; -fx-border-radius: 5;"/>
+                        </VBox>
+                    </VBox>
+                </ScrollPane>
             </items>
         </SplitPane>
     </center>
 
+    <!-- Barra inferior -->
     <bottom>
-        <Label text="Agenda CRUD • JavaFX + MariaDB">
-            <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
-            </padding>
-        </Label>
+        <HBox alignment="CENTER" style="-fx-background-color: #34495e; -fx-padding: 10;">
+            <Label text="Agenda CRUD Jeffrey Yoon 1196854" 
+                   style="-fx-text-fill: white; -fx-font-size: 12px;"/>
+        </HBox>
     </bottom>
 </BorderPane>
