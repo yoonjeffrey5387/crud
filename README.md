@@ -1,28 +1,57 @@
 # Agenda CRUD JavaFX (Personas + Teléfonos)
 
-Proyecto de ejemplo para un CRUD con JavaFX + MariaDB (o MySQL) usando JDBC y JUnit 5.
+Este es un proyecto de ejemplo para gestionar personas y sus teléfonos usando JavaFX y MariaDB (o MySQL).
+
+## Características
+- **CRUD Completo**: Crea, lee, actualiza y elimina personas.
+- **Teléfonos Múltiples**: Cada persona puede tener varios números de teléfono.
+- **Base de Datos**: Utiliza MariaDB/MySQL para almacenar la información.
+- **Interfaz Gráfica**: Desarrollado con JavaFX para una experiencia de usuario intuitiva.
 
 ## Requisitos
-- JDK 17+
-- Maven 3.9+
-- MariaDB/MySQL en localhost (o ajustar `src/main/resources/com/example/agenda/db.properties`)
+- **Java Development Kit (JDK)**: Versión 17 o superior.
+- **Apache Maven**: Versión 3.9 o superior.
+- **MariaDB/MySQL**: Un servidor de base de datos funcionando localmente.
 
-## Cómo ejecutar
-```bash
-# 1) Crear DB/tablas (si no existen). Puedes ejecutar el SQL en tu servidor:
-#   - src/main/resources/com/example/agenda/schema.sql
-#   - src/main/resources/com/example/agenda/data.sql (opcional)
+## Configuración de la Base de Datos
+1.  **Instalar MariaDB/MySQL**: Si no lo tienes, instálalo en tu máquina.
+2.  **Crear la base de datos `agenda`**:
+    ```sql
+    CREATE DATABASE agenda;
+    ```
+3.  **Crear un usuario y otorgar permisos**:
+    ```sql
+    CREATE USER 'usuario1'@'localhost' IDENTIFIED BY 'superpassword';
+    GRANT ALL PRIVILEGES ON agenda.* TO 'usuario1'@'localhost';
+    FLUSH PRIVILEGES;
+    ```
+4.  **Ejecutar el esquema de tablas**:
+    Abre el archivo `src/main/resources/com/example/agenda/schema.sql` y ejecuta su contenido en tu base de datos `agenda`. Esto creará las tablas `Personas` y `Telefonos`.
+5.  **Insertar datos de prueba (opcional)**:
+    Abre el archivo `src/main/resources/com/example/agenda/data.sql` y ejecuta su contenido para tener algunos datos iniciales.
+6.  **Configurar la conexión en Java**:
+    Abre `src/main/resources/com/example/agenda/db.properties` y asegúrate de que las credenciales (`db.url`, `db.user`, `db.password`) coincidan con tu configuración de MariaDB/MySQL.
 
-# 2) Ajusta credenciales en:
-#   src/main/resources/com/example/agenda/db.properties
+## Cómo Ejecutar la Aplicación
+1.  Abre una terminal en la raíz del proyecto.
+2.  Ejecuta el siguiente comando para compilar y lanzar la aplicación:
+    ```bash
+    mvn clean javafx:run
+    ```
 
-# 3) Ejecuta la app JavaFX
-mvn -q clean javafx:run
+## Estructura del Proyecto
+- `src/main/java/com/example/agenda/`: Contiene el código fuente Java.
+    - `App.java`: Punto de entrada de la aplicación JavaFX.
+    - `MainController.java`: Lógica de la interfaz de usuario.
+    - `model/`: Clases de modelo (ej. `Person`).
+    - `dao/`: Clases de acceso a datos (ej. `PersonDao`).
+    - `Db.java`: Utilidad para la conexión a la base de datos.
+- `src/main/resources/com/example/agenda/`: Contiene recursos.
+    - `main-view.fxml`: Definición de la interfaz de usuario.
+    - `db.properties`: Configuración de la base de datos.
+    - `schema.sql`: Script para crear tablas.
+    - `data.sql`: Script para insertar datos de prueba.
+- `pom.xml`: Archivo de configuración de Maven.
 
-# 4) Ejecuta pruebas
-mvn -q test
-```
-
-## Notas
-- Para pruebas unitarias se usa H2 en modo MySQL.
-- Para integración real con MariaDB, asegúrate de que el servicio está activo y los datos de `db.properties` son correctos.
+---
+**Desarrollado por Jeffrey Yoon 1196854**

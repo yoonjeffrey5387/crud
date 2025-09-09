@@ -2,6 +2,7 @@ package com.example.agenda.repository.impl;
 
 import com.example.agenda.Db;
 import com.example.agenda.model.Person;
+import com.example.agenda.model.Address;
 import com.example.agenda.repository.PersonRepository;
 import java.sql.*;
 import java.util.ArrayList;
@@ -292,7 +293,32 @@ public class PersonRepositoryImpl implements PersonRepository {
         
         // Cargar direcciones
         List<Integer> addressIds = getAddressesByPersonId(person.getId());
-        // Las direcciones se cargarán en el servicio cuando sea necesario
+        List<Address> addresses = new ArrayList<>();
+        
+        // Cargar cada dirección por su ID
+        for (Integer addressId : addressIds) {
+            String sql = "SELECT id, calle, ciudad, estado, codigoPostal, pais FROM Direcciones WHERE id = ?";
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setInt(1, addressId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        Address address = new Address(
+                            rs.getInt("id"),
+                            rs.getString("calle"),
+                            rs.getString("ciudad"),
+                            rs.getString("estado"),
+                            rs.getString("codigoPostal"),
+                            rs.getString("pais")
+                        );
+                        addresses.add(address);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        person.setDirecciones(addresses);
     }
     
     private void savePhones(Connection con, Person person) throws SQLException {
